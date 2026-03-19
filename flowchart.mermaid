@@ -1,0 +1,27 @@
+flowchart TD
+    A[gitpulse] --> B[Load Config]
+    B --> C{Which command?}
+
+    C -->|scan| D[Find all repos]
+    C -->|standup| E[Find all repos]
+    C -->|cleanup| F[Find all repos]
+    C -->|watch| G[Find all repos]
+    C -->|overview| H[Find all repos]
+
+    D --> I[Check status per repo]
+    I --> J[Print status table]
+
+    E --> K[Get commits by author + date]
+    K --> L[Print standup report]
+
+    F --> M[Find merged / stale branches]
+    M --> N{User confirms?}
+    N -->|yes| O[Delete branches]
+    N -->|no| P[Skip]
+
+    G --> Q[Run scan]
+    Q --> R[Sleep interval]
+    R --> Q
+
+    H --> S[Aggregate stats]
+    S --> T[Print health score]
