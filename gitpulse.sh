@@ -37,7 +37,7 @@ main() {
     case "$cmd" in 
         scan)
             source "$SCRIPT_DIR/commands/scan.sh"
-            find_repos "$@"
+            cmd_scan "$@"
             ;;
         --help|-h)
             show_help
