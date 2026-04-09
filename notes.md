@@ -11,3 +11,7 @@
 - SCRIPT_DIR gives us an absolute path for sourcing files later in the code
 - Shifted argument after using and input verifying first argument (see if it exists and give it a default if not)
 - Source the command files only when they are needed
+
+## 09.04.2026
+- Add cmd_scan function to tie everything in scan.sh together
+- Print a table of all information
