@@ -15,3 +15,6 @@
 ## 09.04.2026
 - Add cmd_scan function to tie everything in scan.sh together
 - Print a table of all information
+
+## 16.04.2026
+- Finished all tests (20 in total)
