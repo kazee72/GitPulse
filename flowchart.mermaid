@@ -1,27 +1,30 @@
 flowchart TD
-    A[gitpulse] --> B[Load Config]
-    B --> C{Which command?}
+    A[gitpulse.sh] --> B{Which command?}
 
-    C -->|scan| D[Find all repos]
-    C -->|standup| E[Find all repos]
-    C -->|cleanup| F[Find all repos]
-    C -->|watch| G[Find all repos]
-    C -->|overview| H[Find all repos]
+    B -->|scan| C[find_repos: scan directory]
+    B -->|--help / -h| D[show_help]
+    B -->|--version / -v| E[show_version]
+    B -->|unknown| F[Print error]
 
-    D --> I[Check status per repo]
-    I --> J[Print status table]
+    C --> G{Path valid?}
+    G -->|no| H[Print error to stderr]
+    G -->|yes| I[Loop through subdirectories]
 
-    E --> K[Get commits by author + date]
-    K --> L[Print standup report]
+    I --> J{Is git repo?}
+    J -->|no| I
+    J -->|yes| K[get_repo_status]
 
-    F --> M[Find merged / stale branches]
-    M --> N{User confirms?}
-    N -->|yes| O[Delete branches]
-    N -->|no| P[Skip]
+    K --> L{Has commits?}
+    L -->|no| M[Print 'no commits' row]
+    L -->|yes| N[Check dirty / clean]
 
-    G --> Q[Run scan]
-    Q --> R[Sleep interval]
-    R --> Q
+    N --> O{Has upstream?}
+    O -->|yes| P[Count ahead / behind]
+    O -->|no| Q[Set ahead / behind = N/A]
 
-    H --> S[Aggregate stats]
-    S --> T[Print health score]
+    P --> R[Get last commit, stash, untracked]
+    Q --> R
+    R --> S[Print status row]
+
+    M --> I
+    S --> I
