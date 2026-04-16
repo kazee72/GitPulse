@@ -21,16 +21,6 @@ Run GitPulse automatically twice a day:
 
 30 7,16 * * * /path/to/gitpulse.sh scan /path/to/projects >> /path/to/gitpulse.log 2>&1
 
-## Project Structure
-gitpulse/
-├── gitpulse.sh          # main entry point
-├── lib/
-│   └── utils.sh         # shared utilities (colors, logging)
-├── commands/
-│   └── scan.sh          # scan command implementation
-└── tests/
-└── test_scan.sh     # test suite
-
 ## Tests
 ```bash
 bash tests/test_scan.sh
