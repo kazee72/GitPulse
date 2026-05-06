@@ -18,8 +18,9 @@ GitPulse is a bash CLI tool that scans a directory for Git repositories and repo
 ## Cron Setup
 
 Run GitPulse automatically twice a day:
-
+```
 30 7,16 * * * /path/to/gitpulse.sh scan /path/to/projects >> /path/to/gitpulse.log 2>&1
+```
 
 ## Tests
 ```bash
