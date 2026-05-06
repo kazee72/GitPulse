@@ -8,11 +8,14 @@
 #   02.04.2026 - Add get_repo_status() with branch, dirty, ahead/behind, stash checks
 #   09.04.2026 - Add cmd_scan(), table output with headers
 #   16.04.2026 - Add timestamp, fix column alignment for non-color output
+#   06.05.2026 - Fix no-commits row alignment with color_dim
 
 if [[ -t 1 ]]; then
-    STATUS_WIDTH=35
+    STATUS_WIDTH=33
+    HEADER_WIDTH=22
 else
     STATUS_WIDTH=22
+    HEADER_WIDTH=22
 fi
 
 find_repos() {
@@ -42,7 +45,8 @@ get_repo_status() {
     branch=$(git -C "$repo_path" branch --show-current)
 
     if ! git -C "$repo_path" rev-parse HEAD > /dev/null 2>&1; then
-        printf "%-20s %-15s %-${STATUS_WIDTH}s %-8s %-8s %-18s %-8s %-8s\n" "$name" "$branch" "no commits" "-" "-" "-" "0" "0"
+        local status=$(color_dim "no commits")
+        printf "%-20s %-15s %-${STATUS_WIDTH}s %-8s %-8s %-18s %-8s %-8s\n" "$name" "$branch" "$status" "-" "-" "-" "0" "0"
         return
     fi
 
@@ -77,7 +81,7 @@ cmd_scan() {
     local scan_dir="${1:-.}"
 
     echo "=== Scan run at $(date '+%Y-%m-%d %H:%M:%S') ==="
-    printf "%-20s %-15s %-${STATUS_WIDTH}s %-8s %-8s %-18s %-8s %-8s\n" "REPO" "BRANCH" "STATUS" "AHEAD" "BEHIND" "LAST COMMIT" "STASH" "UNTRACK"
+    printf "%-20s %-15s %-${HEADER_WIDTH}s %-8s %-8s %-18s %-8s %-8s\n" "REPO" "BRANCH" "STATUS" "AHEAD" "BEHIND" "LAST COMMIT" "STASH" "UNTRACK"
 
     for repo in $(find_repos "$scan_dir"); do
         get_repo_status "$repo"
